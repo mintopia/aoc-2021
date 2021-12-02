@@ -1,13 +1,13 @@
-name: Build and Run
+name: Run All Days
 on: push
 jobs:
-  test-and-lint:
+  run-all:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: File Permissions
         run: sudo chown -R 1000:1000 .
       - name: Build
-        run: docker-compose run --rm composer install
+        run: docker-compose run --rm composer install --ansi
       - name: Run
-        run: docker-compose run --rm aoc aoc:all
+        run: docker-compose run --rm aoc aoc:all --ansi
