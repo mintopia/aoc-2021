@@ -1,0 +1,19 @@
+{
+    "name": "mintopia/aoc2021",
+    "description": "Advent of Code 2021",
+    "autoload": {
+        "psr-4": {
+            "Mintopia\\Aoc2021\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jessica Smith",
+            "email": "jess@mintopia.net"
+        }
+    ],
+    "require": {
+        "symfony/console": "^6.0",
+        "php": "^8.0"
+    }
+}
