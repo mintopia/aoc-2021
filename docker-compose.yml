@@ -1,0 +1,12 @@
+version: '3'
+services:
+  aoc:
+    image: 1and1internet/php-build-environment:8.1
+    volumes:
+      - .:/app
+    entrypoint: php run.php
+  composer:
+    image: 1and1internet/php-build-environment:8.1
+    entrypoint: composer
+    volumes:
+      - .:/app
