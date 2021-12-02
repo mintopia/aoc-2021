@@ -1,6 +1,7 @@
 {
     "name": "mintopia/aoc2021",
     "description": "Advent of Code 2021",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Mintopia\\Aoc2021\\": "src/"
