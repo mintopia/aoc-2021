@@ -14,7 +14,7 @@ abstract class Day extends Command
 
     protected function configure(): void
     {
-
+        $this->setDescription("Advent of Code {$this->title}");
     }
 
     protected function showHeader()

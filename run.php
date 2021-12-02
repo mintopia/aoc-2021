@@ -10,4 +10,6 @@ $application->addCommands([
     new \Mintopia\Aoc2021\Day2(),
 ]);
 
+$application->setName("Mintopia's Advent of Code 2021");
+
 $application->run();
