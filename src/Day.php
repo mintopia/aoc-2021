@@ -19,8 +19,8 @@ abstract class Day extends Command
 
     protected function showHeader()
     {
-        $title = "  Advent of Code: {$this->title}  ";
-        $padding = str_repeat(' ', strlen($title));
+        $title = "  Advent of Code: {$this->title}  ";
+        $padding = str_repeat(' ', strlen($title) - 4);
 
         $this->output->writeln([
             "<bg=cyan;fg=black>{$padding}",
