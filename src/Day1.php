@@ -1,20 +1,14 @@
 <?php
 namespace Mintopia\Aoc2021;
 
+use Mintopia\Aoc2021\Helpers\Result;
+
 class Day1 extends Day
 {
     protected static $defaultName = 'aoc:day1';
+    protected int $dayNumber = 1;
 
-    protected $title = 'Day 1';
-
-    protected array $data;
-
-    protected function loadData()
-    {
-        $this->data = file('input/day1.txt', FILE_SKIP_EMPTY_LINES);
-    }
-
-    protected function part1()
+    protected function part1(): Result
     {
         $larger = 0;
         $previous = null;
@@ -27,10 +21,10 @@ class Day1 extends Day
             $previous = $line;
         }
 
-        $this->showResult('Result', $larger);
+        return new Result(Result::PART1, $larger);
     }
 
-    protected function part2($carry)
+    protected function part2(Result $part1): Result
     {
         $larger = 0;
         $previousSum = null;
@@ -49,6 +43,6 @@ class Day1 extends Day
             $previousSum = $sum;
         }
 
-        $this->showResult('Result', $larger);
+        return new Result(Result::PART2, $larger);
     }
 }

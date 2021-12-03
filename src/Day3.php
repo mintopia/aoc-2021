@@ -1,20 +1,14 @@
 <?php
 namespace Mintopia\Aoc2021;
 
+use Mintopia\Aoc2021\Helpers\Result;
+
 class Day3 extends Day
 {
     protected static $defaultName = 'aoc:day3';
+    protected int $dayNumber = 3;
 
-    protected $title = 'Day 3';
-
-    protected array $data = [];
-
-    protected function loadData()
-    {
-        $this->data = file('input/day3.txt', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
-    }
-
-    protected function part1()
+    protected function part1(): Result
     {
         $gamma = '';
         $epsilon = '';
@@ -31,25 +25,10 @@ class Day3 extends Day
         $this->output->writeln("Epsilon: <info>{$epsilon}</info> = <info>{$e}</info>");
         $this->output->writeln("Gamma: <info>{$gamma}</info> = <info>{$g}</info>");
 
-        $this->showResult('Result', $e * $g);
+        return new Result(Result::PART1, $e * $g);
     }
 
-    protected function getCommon($data, $index)
-    {
-        $bits = [];
-        foreach ($data as $datum) {
-            $bits[] = $datum[$index];
-        }
-        $one = array_sum($bits);
-        $half = count($bits) / 2;
-        if ($one >= $half) {
-            return ['1', '0'];
-        } else {
-            return ['0', '1'];
-        }
-    }
-
-    protected function part2($carry)
+    protected function part2(Result $part1): Result
     {
         $o2 = $this->getCommonValue(0);
         $co2 = $this->getCommonValue(1);
@@ -60,7 +39,7 @@ class Day3 extends Day
         $this->output->writeln("O2 Generator: <info>{$o2}</info> = <info>{$o2Dec}</info>");
         $this->output->writeln("CO2 Scrubber: <info>{$co2}</info> = <info>{$co2Dec}</info>");
 
-        $this->showResult('Result', $o2Dec * $co2Dec);
+        return new Result(Result::PART2, $o2Dec * $co2Dec);
     }
 
     protected function getCommonValue($which)
@@ -78,6 +57,21 @@ class Day3 extends Day
             if (count($filtered) == 1) {
                 return end($filtered);
             }
+        }
+    }
+
+    protected function getCommon($data, $index)
+    {
+        $bits = [];
+        foreach ($data as $datum) {
+            $bits[] = $datum[$index];
+        }
+        $one = array_sum($bits);
+        $half = count($bits) / 2;
+        if ($one >= $half) {
+            return ['1', '0'];
+        } else {
+            return ['0', '1'];
         }
     }
 }
