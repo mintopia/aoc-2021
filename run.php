@@ -5,12 +5,17 @@ use Symfony\Component\Console\Application;
 
 $application = new Application();
 
-$application->addCommands([
+$commands = [
     new \Mintopia\Aoc2021\RunAll(),
-    new \Mintopia\Aoc2021\Day1(),
-    new \Mintopia\Aoc2021\Day2(),
-    new \Mintopia\Aoc2021\Day3(),
-]);
+];
+for ($i = 1; $i <= 24; $i++) {
+    $className = "\\Mintopia\\Aoc2021\\Day{$i}";
+    if (class_exists($className)) {
+        $commands[] = new $className;
+    }
+}
+
+$application->addCommands($commands);
 
 $application->setName("Mintopia's Advent of Code 2021");
 
