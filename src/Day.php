@@ -78,9 +78,9 @@ abstract class Day extends Command
 
         // Assertion
         if ($result->value == $assert) {
-            $this->io->success("Actual {$result->value} matches Expected {$assert}");
+            $this->io->success("Answer matches expected: {$assert}");
         } else {
-            $this->io->error("Actual {$result->value} does not match Expected {$assert}");
+            $this->io->error("Answer does not match expected: {$assert}");
         }
     }
 
