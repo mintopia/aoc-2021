@@ -25,14 +25,13 @@ class Day3 extends Day
             $epsilon .= $epsilonBit;
         }
 
-        $e = base_convert($epsilon, 2, 10);
-        $g = base_convert($gamma, 2, 10);
+        $e = bindec($epsilon);
+        $g = bindec($gamma);
 
-        $this->output->writeln("Epsilon: <info>{$epsilon} = {$e}</info>");
-        $this->output->writeln("Gamma: <info>{$gamma} = {$g}</info>");
+        $this->output->writeln("Epsilon: <info>{$epsilon}</info> = <info>{$e}</info>");
+        $this->output->writeln("Gamma: <info>{$gamma}</info> = <info>{$g}</info>");
 
         $this->showResult('Result', $e * $g);
-        return $gamma;
     }
 
     protected function getCommon($data, $index)
@@ -55,11 +54,11 @@ class Day3 extends Day
         $o2 = $this->getCommonValue(0);
         $co2 = $this->getCommonValue(1);
 
-        $o2Dec = base_convert($o2, 2, 10);
-        $co2Dec = base_convert($co2, 2, 10);
+        $o2Dec = bindec($o2);
+        $co2Dec = bindec($co2);
 
-        $this->output->writeln("O2 Generator: <info>{$o2} = {$o2Dec}</info>");
-        $this->output->writeln("CO2 Scrubber: <info>{$co2} = {$co2Dec}</info>");
+        $this->output->writeln("O2 Generator: <info>{$o2}</info> = <info>{$o2Dec}</info>");
+        $this->output->writeln("CO2 Scrubber: <info>{$co2}</info> = <info>{$co2Dec}</info>");
 
         $this->showResult('Result', $o2Dec * $co2Dec);
     }
