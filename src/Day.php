@@ -23,18 +23,6 @@ abstract class Day extends Command
         $this->addOption('test', 't',  InputOption::VALUE_NONE, 'Use test data');
     }
 
-    protected function showHeader()
-    {
-        $title = "  Advent of Code: Day {$this->dayNumber}  ";
-        $padding = str_repeat(' ', strlen($title) - 4);
-
-        $this->output->writeln([
-            "<bg=cyan;fg=black>{$padding}",
-            "{$title}",
-            "{$padding}</>",
-        ]);
-    }
-
     protected function getInputFilename()
     {
         if ($this->input->getOption('test')) {
@@ -50,7 +38,7 @@ abstract class Day extends Command
         $this->output = $output;
         $this->io = new SymfonyStyle($this->input, $this->output);
 
-        $this->showHeader();
+        $this->io->block("Advent of Code: Day {$this->dayNumber}", null, 'fg=black;bg=cyan', ' ', true);
 
         if ($this->input->getOption('test')) {
             $this->io->warning('Using test data');
@@ -83,13 +71,13 @@ abstract class Day extends Command
         // Get our known result
         [$part1Answer, $part2Answer] = file("testdata/output/day{$this->dayNumber}.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         if ($result->part === Result::PART1) {
-            $assert = (int) $part1Answer;
+            $assert = $part1Answer;
         } else {
-            $assert = (int) $part2Answer;
+            $assert = $part2Answer;
         }
 
         // Assertion
-        if ($result->value === $assert) {
+        if ($result->value == $assert) {
             $this->io->success("Actual {$result->value} matches Expected {$assert}");
         } else {
             $this->io->error("Actual {$result->value} does not match Expected {$assert}");
