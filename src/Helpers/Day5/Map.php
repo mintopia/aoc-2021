@@ -22,12 +22,8 @@ class Map
 
     public function addPoint(int $x, int $y): void
     {
-        if ($x > $this->xMax) {
-            $this->xMax = $x;
-        }
-        if ($y > $this->yMax) {
-            $this->yMax = $y;
-        }
+        $this->xMax = max($x, $this->xMax);
+        $this->yMax = max($y, $this->yMax);
 
         $key = "{$x},{$y}";
         if (!array_key_exists($key, $this->points)) {

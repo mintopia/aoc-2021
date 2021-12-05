@@ -17,24 +17,22 @@ class Line
 
     protected function createPoints(bool $allowDiagonal): void
     {
-        $length = abs($this->end->y - $this->start->y);
-        if ($length === 0) {
-            $length = abs($this->end->x - $this->start->x);
-        }
+        $length = max(
+            abs($this->end->y - $this->start->y),
+            abs($this->end->x - $this->start->x)
+        );
 
-        $yModifier = 0;
-        if ($this->start->y < $this->end->y) {
-            $yModifier = 1;
-        } elseif ($this->start->y > $this->end->y) {
-            $yModifier = -1;
-        }
+        $yModifier = match(true) {
+            $this->start->y < $this->end->y => 1,
+            $this->start->y > $this->end->y => -1,
+            default => 0
+        };
 
-        $xModifier = 0;
-        if ($this->start->x < $this->end->x) {
-            $xModifier = 1;
-        } elseif ($this->start->x > $this->end->x) {
-            $xModifier = -1;
-        }
+        $xModifier = match(true) {
+            $this->start->x < $this->end->x => 1,
+            $this->start->x > $this->end->x => -1,
+            default => 0
+        };
 
         if ($xModifier != 0 && $yModifier != 0 && !$allowDiagonal) {
             return;
