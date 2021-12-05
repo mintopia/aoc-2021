@@ -9,11 +9,10 @@ class Grid
 {
     public array $rows = [];
     public array $columns = [];
-    public int $number;
 
     protected array $marked = [];
 
-    public function __construct(int $number, array $grid)
+    public function __construct(public int $number, array $grid)
     {
         $this->number = $number;
         $this->rows = [];
@@ -26,12 +25,12 @@ class Grid
         $this->columns = array_map(null, ...$this->rows);
     }
 
-    public function mark($number)
+    public function mark($number): void
     {
         $this->marked[] = $number;
     }
 
-    public function score()
+    public function score(): int
     {
         $ourNumbers = array_merge(...$this->rows);
         $notCalled = array_diff($ourNumbers, $this->marked);
@@ -39,7 +38,7 @@ class Grid
         return $sum * end($this->marked);
     }
 
-    public function isComplete()
+    public function isComplete(): bool
     {
         foreach (array_merge($this->rows, $this->columns) as $row) {
             $intersection = array_intersect($row, $this->marked);
@@ -50,7 +49,7 @@ class Grid
         return false;
     }
 
-    public function display(OutputInterface $output)
+    public function display(OutputInterface $output): void
     {
         $output->writeln([
             "Grid {$this->number}",

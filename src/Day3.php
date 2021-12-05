@@ -5,9 +5,6 @@ use Mintopia\Aoc2021\Helpers\Result;
 
 class Day3 extends Day
 {
-    protected static $defaultName = 'aoc:day3';
-    protected int $dayNumber = 3;
-
     protected function part1(): Result
     {
         $gamma = '';
@@ -42,7 +39,7 @@ class Day3 extends Day
         return new Result(Result::PART2, $o2Dec * $co2Dec);
     }
 
-    protected function getCommonValue($which)
+    protected function getCommonValue($which): string
     {
         $filtered = $this->data;
         $len = strlen($this->data[0]);
@@ -60,7 +57,7 @@ class Day3 extends Day
         }
     }
 
-    protected function getCommon($data, $index)
+    protected function getCommon($data, $index): array
     {
         $bits = [];
         foreach ($data as $datum) {

@@ -5,9 +5,6 @@ use Mintopia\Aoc2021\Helpers\Result;
 
 class ExampleDay extends Day
 {
-    protected static $defaultName = 'aoc:day100';
-    protected int $dayNumber = 100;
-
     protected function part1(): Result
     {
         return new Result(Result::PART1, 'foo');

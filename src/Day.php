@@ -15,7 +15,17 @@ abstract class Day extends Command
     protected SymfonyStyle $io;
 
     protected int $dayNumber;
-    protected $data = [];
+    protected array $data = [];
+
+    public function __construct(string $name = null)
+    {
+        $className = get_class($this);
+        $this->dayNumber = (int) str_replace('Mintopia\Aoc2021\Day', '', $className);
+        if ($name === null) {
+            $name = "aoc:day{$this->dayNumber}";
+        }
+        parent::__construct($name);
+    }
 
     protected function configure(): void
     {
@@ -23,7 +33,7 @@ abstract class Day extends Command
         $this->addOption('test', 't',  InputOption::VALUE_NONE, 'Use test data');
     }
 
-    protected function getInputFilename()
+    protected function getInputFilename(): string
     {
         if ($this->input->getOption('test')) {
             return "testdata/input/day{$this->dayNumber}.txt";
@@ -57,7 +67,7 @@ abstract class Day extends Command
         return Command::SUCCESS;
     }
 
-    protected function processResult(Result $result)
+    protected function processResult(Result $result): void
     {
         $this->io->writeln([
             '',
@@ -84,7 +94,7 @@ abstract class Day extends Command
         }
     }
 
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->data = $this->getArrayFromInputFile();
     }

@@ -5,10 +5,7 @@ use Mintopia\Aoc2021\Helpers\Result;
 
 class Day2 extends Day
 {
-    protected static $defaultName = 'aoc:day2';
-    protected int $dayNumber = 2;
-
-    protected function loadData()
+    protected function loadData(): void
     {
         $data = $this->getArrayFromInputFile();
 

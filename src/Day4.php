@@ -6,13 +6,10 @@ use Mintopia\Aoc2021\Helpers\Result;
 
 class Day4 extends Day
 {
-    protected static $defaultName = 'aoc:day4';
-    protected int $dayNumber = 4;
-
     protected array $calledNumbers;
     protected array $grids;
 
-    protected function loadData()
+    protected function loadData(): void
     {
         $data = $this->getArrayFromInputFile();
         $this->calledNumbers = explode(',', $data[0]);
@@ -23,7 +20,7 @@ class Day4 extends Day
         }
     }
 
-    protected function playWinningGame()
+    protected function playWinningGame(): ?Grid
     {
         foreach ($this->calledNumbers as $number) {
             foreach ($this->grids as $grid) {
@@ -35,7 +32,7 @@ class Day4 extends Day
         }
     }
 
-    protected function playLosingGame()
+    protected function playLosingGame(): ?Grid
     {
         $grids = $this->grids;
         foreach ($this->calledNumbers as $number) {
