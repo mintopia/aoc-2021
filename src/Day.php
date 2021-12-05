@@ -54,17 +54,40 @@ abstract class Day extends Command
             $this->io->warning('Using test data');
         }
 
+        $start = hrtime(true);
         $this->loadData();
 
+        $timing = [
+            'Data Loading' => hrtime(true) - $start,
+        ];
+
         $this->io->title('Part 1');
+
+        $start = hrtime(true);
         $result = $this->part1();
+        $timing['Part 1'] = hrtime(true) - $start;
         $this->processResult($result);
 
         $this->io->title('Part 2');
+        $start = hrtime(true);
         $result = $this->part2($result);
+        $timing['Part 2'] = hrtime(true) - $start;
         $this->processResult($result);
 
+        $this->renderTiming($timing);
+
         return Command::SUCCESS;
+    }
+
+    protected function renderTiming($timing): void
+    {
+        $table = [];
+        foreach ($timing as $description => $nanoSeconds) {
+            $ms = round($nanoSeconds / 1000000, 3);
+            $table[] = [$description, $ms];
+        }
+        $this->io->title('Performance');
+        $this->io->table(['Section', 'Time (ms)'], $table);
     }
 
     protected function processResult(Result $result): void
