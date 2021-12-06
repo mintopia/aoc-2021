@@ -14,7 +14,6 @@ class Grid
 
     public function __construct(public int $number, array $grid)
     {
-        $this->number = $number;
         $this->rows = [];
         foreach ($grid as $gridRow) {
             $this->rows[] = array_values(array_filter(explode(' ', $gridRow), function ($input) {

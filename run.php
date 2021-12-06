@@ -1,6 +1,8 @@
 <?php
 require_once(dirname(__FILE__) . '/vendor/autoload.php');
 
+ini_set('memory_limit', '4G');
+
 use Symfony\Component\Console\Application;
 
 $application = new Application();
