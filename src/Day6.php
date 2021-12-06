@@ -19,12 +19,11 @@ class Day6 extends Day
 
     protected function getFishCount(int $days): int
     {
-        $fishes = $this->createFishes();
+        $fishes = array_fill(0, 9, 0);
         foreach ($this->data as $age) {
             $fishes[$age]++;
         }
 
-        // Now update each day
         for ($i = 0; $i < $days; $i++) {
             $fishes = $this->updateFishes($fishes);
         }
@@ -32,27 +31,13 @@ class Day6 extends Day
         return array_sum($fishes);
     }
 
-    protected function createFishes(): array
-    {
-        $fishes = [];
-        for ($i = 0; $i <= 8; $i++) {
-            $fishes[$i] = 0;
-        }
-        return $fishes;
-    }
-
     protected function updateFishes(array $fishes): array
     {
-        $newFishes = $this->createFishes();
-        foreach ($fishes as $age => $fish) {
-            $newAge = $age - 1;
-            if ($newAge < 0) {
-                $newAge = 6;
-                $newFishes[8]++;
-            }
-            $newFishes[$newAge] += $fish;
-        }
-        return $newFishes;
+        $spawningFish = array_shift($fishes);
+        $fishes = array_values($fishes);
+        $fishes[6] += $spawningFish;
+        $fishes[8] = $spawningFish;
+        return $fishes;
     }
 
     protected function part1(): Result
