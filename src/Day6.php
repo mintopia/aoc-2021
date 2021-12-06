@@ -34,9 +34,8 @@ class Day6 extends Day
     protected function updateFishes(array $fishes): array
     {
         $spawningFish = array_shift($fishes);
-        $fishes = array_values($fishes);
         $fishes[6] += $spawningFish;
-        $fishes[8] = $spawningFish;
+        $fishes[] = $spawningFish;
         return $fishes;
     }
 
