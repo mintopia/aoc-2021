@@ -4,7 +4,6 @@ namespace Mintopia\Aoc2021;
 use Mintopia\Aoc2021\Helpers\Result;
 use Mintopia\Aoc2021\Helpers\Timing;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
