@@ -31,8 +31,10 @@ class Day2 extends Day
                 $depth -= $move->distance;
             }
         }
-        $this->output->writeln("Depth: <info>{$depth}</info>");
-        $this->output->writeln("Distance: <info>{$distance}</info>");
+        if (!$this->isBenchmark) {
+            $this->output->writeln("Depth: <info>{$depth}</info>");
+            $this->output->writeln("Distance: <info>{$distance}</info>");
+        }
 
         $product = $distance * $depth;
         return new Result(Result::PART1, $product);
@@ -54,9 +56,12 @@ class Day2 extends Day
                 $aim -= $move->distance;
             }
         }
-        $this->output->writeln("Aim: <info>{$aim}</info>");
-        $this->output->writeln("Depth: <info>{$depth}</info>");
-        $this->output->writeln("Distance: <info>{$distance}</info>");
+
+        if (!$this->isBenchmark) {
+            $this->output->writeln("Aim: <info>{$aim}</info>");
+            $this->output->writeln("Depth: <info>{$depth}</info>");
+            $this->output->writeln("Distance: <info>{$distance}</info>");
+        }
 
         $product = $distance * $depth;
 

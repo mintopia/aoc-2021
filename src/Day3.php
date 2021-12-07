@@ -19,8 +19,10 @@ class Day3 extends Day
         $e = bindec($epsilon);
         $g = bindec($gamma);
 
-        $this->output->writeln("Epsilon: <info>{$epsilon}</info> = <info>{$e}</info>");
-        $this->output->writeln("Gamma: <info>{$gamma}</info> = <info>{$g}</info>");
+        if (!$this->isBenchmark) {
+            $this->output->writeln("Epsilon: <info>{$epsilon}</info> = <info>{$e}</info>");
+            $this->output->writeln("Gamma: <info>{$gamma}</info> = <info>{$g}</info>");
+        }
 
         return new Result(Result::PART1, $e * $g);
     }
@@ -33,8 +35,10 @@ class Day3 extends Day
         $o2Dec = bindec($o2);
         $co2Dec = bindec($co2);
 
-        $this->output->writeln("O2 Generator: <info>{$o2}</info> = <info>{$o2Dec}</info>");
-        $this->output->writeln("CO2 Scrubber: <info>{$co2}</info> = <info>{$co2Dec}</info>");
+        if (!$this->isBenchmark) {
+            $this->output->writeln("O2 Generator: <info>{$o2}</info> = <info>{$o2Dec}</info>");
+            $this->output->writeln("CO2 Scrubber: <info>{$co2}</info> = <info>{$co2Dec}</info>");
+        }
 
         return new Result(Result::PART2, $o2Dec * $co2Dec);
     }

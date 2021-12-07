@@ -15,7 +15,10 @@ class Day5 extends Day
 
     protected function renderMap(Map $map): void
     {
-        if ($this->input->getOption('test') || $this->input->getOption('display')) {
+        if ($this->isBenchmark) {
+            return;
+        }
+        if ($this->isTest || $this->input->getOption('display')) {
             $map->display($this->output);
         }
     }

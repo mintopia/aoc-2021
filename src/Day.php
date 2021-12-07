@@ -2,7 +2,9 @@
 namespace Mintopia\Aoc2021;
 
 use Mintopia\Aoc2021\Helpers\Result;
+use Mintopia\Aoc2021\Helpers\Timing;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,6 +18,9 @@ abstract class Day extends Command
 
     protected int $dayNumber;
     protected array $data = [];
+
+    protected bool $isTest = false;
+    protected bool $isBenchmark = false;
 
     public function __construct(string $name = null)
     {
@@ -31,6 +36,8 @@ abstract class Day extends Command
     {
         $this->setDescription("Advent of Code Day {$this->dayNumber}");
         $this->addOption('test', 't',  InputOption::VALUE_NONE, 'Use test data');
+        $this->addOption('benchmark', 'b',  InputOption::VALUE_NONE, 'Benchmark');
+        $this->addOption('iterations', 'i',  InputOption::VALUE_OPTIONAL, 'Iterations for benchmark', 100);
     }
 
     protected function getInputFilename(): string
@@ -51,51 +58,66 @@ abstract class Day extends Command
         $this->io->block("Advent of Code: Day {$this->dayNumber}", null, 'fg=black;bg=cyan', ' ', true);
 
         if ($this->input->getOption('test')) {
+            $this->isTest = true;
             $this->io->warning('Using test data');
         }
+        if ($this->input->getOption('benchmark')) {
+            $iterations = $this->input->getOption('iterations');
+            $this->io->title("Benchmarking: {$iterations} iterations");
+            $this->isBenchmark = true;
+            $timings = [];
+            for ($i = 0; $i < $iterations; $i++) {
+                $timings[] = $this->executeDay();
+            }
 
-        $start = hrtime(true);
-        $this->loadData();
-
-        $timing = [
-            'Data Loading' => hrtime(true) - $start,
-        ];
-
-        $this->io->title('Part 1');
-
-        $start = hrtime(true);
-        $result = $this->part1();
-        $timing['Part 1'] = hrtime(true) - $start;
-        $this->processResult($result);
-
-        $this->io->title('Part 2');
-        $start = hrtime(true);
-        $result = $this->part2($result);
-        $timing['Part 2'] = hrtime(true) - $start;
-        $this->processResult($result);
-
-        $this->renderTiming($timing);
-
+            $timing = new Timing();
+            $timing->getAverages($timings);
+            $timing->render($this->io);
+        } else {
+            $timing = $this->executeDay();
+            $timing->render($this->io);
+        }
         return Command::SUCCESS;
     }
 
-    protected function renderTiming($timing): void
+    protected function executeDay(): Timing
     {
-        $table = [];
-        foreach ($timing as $description => $nanoSeconds) {
-            $ms = round($nanoSeconds / 1000000, 3);
-            $table[] = [$description, $ms];
+        $timing = new Timing;
+        $start = hrtime(true);
+        $this->loadData();
+
+        $timing->dataLoading = hrtime(true) - $start;
+
+        if (!$this->isBenchmark) {
+            $this->io->title('Part 1');
         }
-        $this->io->title('Performance');
-        $this->io->table(['Section', 'Time (ms)'], $table);
+
+        $start = hrtime(true);
+        $result = $this->part1();
+        $timing->part1 = hrtime(true) - $start;
+
+        $this->processResult($result);
+
+        if (!$this->isBenchmark) {
+            $this->io->title('Part 2');
+        }
+
+        $start = hrtime(true);
+        $result = $this->part2($result);
+        $timing->part2 = hrtime(true) - $start;
+
+        $this->processResult($result);
+        return $timing;
     }
 
     protected function processResult(Result $result): void
     {
-        $this->io->writeln([
-            '',
-            "Answer: <fg=cyan>{$result->value}</>"
-        ]);
+        if (!$this->isBenchmark) {
+            $this->io->writeln([
+                '',
+                "Answer: <fg=cyan>{$result->value}</>"
+            ]);
+        }
 
         if (!$this->input->getOption('test')) {
             return;
@@ -111,7 +133,9 @@ abstract class Day extends Command
 
         // Assertion
         if ($result->value == $assert) {
-            $this->io->success("Answer matches expected: {$assert}");
+            if (!$this->isBenchmark) {
+                $this->io->success("Answer matches expected: {$assert}");
+            }
         } else {
             $this->io->error("Answer does not match expected: {$assert}");
         }

@@ -54,7 +54,9 @@ class Day4 extends Day
         if (!$winningGrid) {
             throw new \Exception('Unable to find a winning grid');
         }
-        $winningGrid->display($this->io);
+        if (!$this->isBenchmark) {
+            $winningGrid->display($this->io);
+        }
         return new Result(Result::PART1, $winningGrid->score());
     }
 
@@ -64,7 +66,9 @@ class Day4 extends Day
         if (!$losingGrid) {
             throw new \Exception('Unable to find a losing grid');
         }
-        $losingGrid->display($this->output);
+        if (!$this->isBenchmark) {
+            $losingGrid->display($this->output);
+        }
         return new Result(Result::PART2, $losingGrid->score());
     }
 }
