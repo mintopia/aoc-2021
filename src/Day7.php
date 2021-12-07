@@ -6,11 +6,6 @@ use Mintopia\Aoc2021\Helpers\Result;
 
 class Day7 extends Day
 {
-    protected function configure(): void
-    {
-        parent::configure();
-    }
-
     protected function loadData(): void
     {
         $input = file_get_contents($this->getInputFilename());
