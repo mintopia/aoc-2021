@@ -45,7 +45,8 @@ class Day7 extends Day
     {
         $targets = array_merge($this->getMean(), $this->getMedian());
 
-        $lowestFuel = null;
+        $lowestFuel = PHP_INT_MAX;
+        
         foreach ($targets as $target) {
             $fuel = 0;
             foreach ($this->data as $crab) {
@@ -53,11 +54,7 @@ class Day7 extends Day
                 $cost = $fn($movement);
                 $fuel += $cost;
             }
-            if ($lowestFuel === null) {
-                $lowestFuel = $fuel;
-            } else {
-                $lowestFuel = min($lowestFuel, $fuel);
-            }
+            $lowestFuel = min($lowestFuel, $fuel);
         }
 
         return $lowestFuel;
