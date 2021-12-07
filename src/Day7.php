@@ -49,10 +49,7 @@ class Day7 extends Day
         foreach ($targets as $target) {
             $fuel = 0;
             foreach ($this->data as $crab) {
-                $movement = $crab - $target;
-                if ($crab < $target) {
-                    $movement = $target - $crab;
-                }
+                $movement = abs($crab - $target);
                 $cost = $fn($movement);
                 $fuel += $cost;
             }
