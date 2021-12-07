@@ -37,8 +37,7 @@ class Day7 extends Day
     protected function getMedian(): array
     {
         $mid = round(count($this->data) / 2, 0);
-        $average = $this->data[$mid];
-        return range($average - 1, $average + 1);
+        return [$this->data[$mid]];
     }
 
     protected function getFuel(callable $fn): int
@@ -46,7 +45,7 @@ class Day7 extends Day
         $targets = array_merge($this->getMean(), $this->getMedian());
 
         $lowestFuel = PHP_INT_MAX;
-        
+
         foreach ($targets as $target) {
             $fuel = 0;
             foreach ($this->data as $crab) {
