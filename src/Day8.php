@@ -9,6 +9,7 @@ class Day8 extends Day
     protected function loadData(): void
     {
         $data = $this->getArrayFromInputFile();
+        $this->data = [];
         foreach ($data as $datum) {
             $this->data[] = new Display($datum);
         }
