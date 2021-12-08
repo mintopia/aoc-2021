@@ -1,7 +1,6 @@
 <?php
 namespace Mintopia\Aoc2021;
 
-use Mintopia\Aoc2021\Helpers\Day6\Fish;
 use Mintopia\Aoc2021\Helpers\Result;
 
 class Day6 extends Day
