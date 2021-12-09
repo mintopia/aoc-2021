@@ -39,8 +39,7 @@ class Day9 extends Day
         $basins = [];
 
         foreach ($lowPoints as $lp) {
-            [$basin, $checked] = $this->getBasinNeighbours([], $lp->x, $lp->y);
-            $basins[] = count($basin);
+            $basins[] = $this->getBasin($lp->x, $lp->y);
         }
 
         sort($basins);
@@ -69,7 +68,7 @@ class Day9 extends Day
         return true;
     }
 
-    protected function getBasinNeighbours(array $checked, int $x, int $y): array
+    protected function getBasin(int $x, int $y): int
     {
         $points = [
             [$x, $y - 1],
@@ -78,28 +77,17 @@ class Day9 extends Day
             [$x, $y + 1],
         ];
 
-        $heights = [];
+        $size = 0;
         foreach ($points as [$px, $py]) {
-            $key = "{$px},{$py}";
-            if (in_array($key, $checked)) {
-                continue;
-            }
-            $checked[] = $key;
-            if (!array_key_exists($py, $this->data)) {
-                continue;
-            }
-            if (!array_key_exists($px, $this->data[$py])) {
+            if (!array_key_exists($py, $this->data) || !array_key_exists($px, $this->data[$py])) {
                 continue;
             }
             if ($this->data[$py][$px] == 9) {
                 continue;
             }
-            $heights[] = $this->data[$py][$px];
-            [$newHeights, $newChecked] = $this->getBasinNeighbours($checked, $px, $py);
-            $heights = array_merge($heights, $newHeights);
-            $checked = array_merge($checked, $newChecked);
-            $checked = array_unique($checked);
+            $this->data[$py][$px] = 9;
+            $size += $this->getBasin($px, $py) + 1;
         }
-        return [$heights, $checked];
+        return $size;
     }
 }
