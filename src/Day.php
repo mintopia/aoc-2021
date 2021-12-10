@@ -6,6 +6,7 @@ use Mintopia\Aoc2021\Helpers\Timing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -138,6 +139,14 @@ abstract class Day extends Command
         } else {
             $this->io->error("Answer does not match expected: {$assert}");
         }
+    }
+
+    protected function getOptionalOutput(): ?OutputInterface
+    {
+        if (!$this->isBenchmark) {
+            return $this->output;
+        }
+        return null;
     }
 
     protected function loadData(): void
