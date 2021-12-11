@@ -6,6 +6,7 @@ use Mintopia\Aoc2021\Helpers\Timing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -21,6 +22,7 @@ abstract class Day extends Command
 
     protected bool $isTest = false;
     protected bool $isBenchmark = false;
+    protected bool $hasVisualisation = false;
 
     public function __construct(string $name = null)
     {
@@ -38,6 +40,9 @@ abstract class Day extends Command
         $this->addOption('test', 't',  InputOption::VALUE_NONE, 'Use test data');
         $this->addOption('benchmark', 'b',  InputOption::VALUE_NONE, 'Benchmark');
         $this->addOption('iterations', 'i',  InputOption::VALUE_OPTIONAL, 'Iterations for benchmark', 100);
+        if ($this->hasVisualisation) {
+            $this->addOption('visualise', null, InputOption::VALUE_NONE, 'Enable visualisation');
+        }
     }
 
     protected function getInputFilename(): string

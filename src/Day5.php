@@ -7,18 +7,14 @@ use Symfony\Component\Console\Input\InputOption;
 
 class Day5 extends Day
 {
-    protected function configure(): void
-    {
-        parent::configure();
-        $this->addOption('display', 'd', InputOption::VALUE_NONE, 'Display the thermal vent map');
-    }
+    protected bool $hasVisualisation = true;
 
     protected function renderMap(Map $map): void
     {
         if ($this->isBenchmark) {
             return;
         }
-        if ($this->isTest || $this->input->getOption('display')) {
+        if ($this->isTest || $this->input->hasOption('visualise')) {
             $map->display($this->output);
         }
     }
