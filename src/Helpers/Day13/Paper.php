@@ -31,14 +31,7 @@ class Paper
         $maxX = max($index['x']) * 2;
         $maxY = max($index['y']) * 2;
 
-
-        $x = [];
-        for ($i = 0; $i <= $maxX; $i++) {
-            $x[] = false;
-        }
-        for ($i = 0; $i <= $maxY; $i++) {
-            $this->grid[] = $x;
-        }
+        $this->grid = array_fill(0, $maxY + 1, array_fill(0, $maxX + 1, false));
     }
 
     public function getDots(): int
