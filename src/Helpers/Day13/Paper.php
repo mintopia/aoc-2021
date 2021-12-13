@@ -74,7 +74,7 @@ class Paper
             $line = '';
             foreach ($row as $x => $value) {
                 if ($value) {
-                    $line .= "<fg=cyan>#</>";
+                    $line .= "<fg=cyan>█</>";
                 } else {
                     $line .= ' ';
                 }
