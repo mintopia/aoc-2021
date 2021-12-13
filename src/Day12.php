@@ -2,7 +2,6 @@
 namespace Mintopia\Aoc2021;
 
 use Mintopia\Aoc2021\Helpers\Day12\Cave;
-use Mintopia\Aoc2021\Helpers\Day12\Pathfinder;
 use Mintopia\Aoc2021\Helpers\Result;
 
 class Day12 extends Day
