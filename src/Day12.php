@@ -26,42 +26,38 @@ class Day12 extends Day
     }
     protected function part1(): Result
     {
-        $pf = new Pathfinder($this->data['start']);
-        $paths = $pf->getPaths();
-        $number = count($paths);
-        $this->displayPaths($paths);
+        $paths = $this->getPathCount($this->data['start'], [], false);
 
-        return new Result(Result::PART1, $number);
+        return new Result(Result::PART1, $paths);
     }
 
     protected function part2(Result $part1): Result
     {
-        $pf = new Pathfinder($this->data['start']);
-        $paths = $pf->getPaths(true);
-        $number = count($paths);
-        $this->displayPaths($paths);
+        $paths = $this->getPathCount($this->data['start'], [], true);
 
-        return new Result(Result::PART2, $number);
+        return new Result(Result::PART2, $paths);
     }
 
-    protected function displayPaths(array $paths): void
+    protected function getPathCount(Cave $cave, array $visited, bool $doubleVisit): int
     {
-        if ($this->isBenchmark || !$this->isTest) {
-            return;
-        }
-
-        $lines = [];
-
-        foreach ($paths as $path) {
-            $line = "<fg=green>start</> -> <fg=cyan>";
-            $path = array_slice($path, 1, -1);
-            $line .= implode('</> -> <fg=cyan>', $path);
-            if ($path) {
-                $line .= '</> -> ';
+        $paths = 0;
+        $visited[] = $cave->name;
+        foreach ($cave->exits as $exit) {
+            if ($exit->isStart) {
+                continue;
             }
-            $line .= "<fg=red>end</>";
-            $lines[] = $line;
+            if ($exit->isEnd) {
+                $paths++;
+                continue;
+            }
+            if ($exit->small && in_array($exit->name, $visited)) {
+                if ($doubleVisit) {
+                    $paths += $this->getPathCount($exit, $visited, false);
+                }
+                continue;
+            }
+            $paths += $this->getPathCount($exit, $visited, $doubleVisit);
         }
-        $this->output->writeln($lines);
+        return $paths;
     }
 }
