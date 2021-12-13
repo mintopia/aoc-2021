@@ -83,7 +83,7 @@ class Paper
                 if ($value) {
                     $line .= "<fg=cyan>#</>";
                 } else {
-                    $line .= '.';
+                    $line .= ' ';
                 }
             }
             $lines[] = $line;
