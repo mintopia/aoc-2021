@@ -41,7 +41,7 @@ class Day14 extends Day
         return $pairs;
     }
 
-    protected function addToKey(array $arr, string $key, int $value = 1)
+    protected function addToKey(array $arr, string $key, int $value = 1): array
     {
         if (!array_key_exists($key, $arr)) {
             $arr[$key] = 0;
