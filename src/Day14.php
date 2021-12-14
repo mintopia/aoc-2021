@@ -5,10 +5,13 @@ use Mintopia\Aoc2021\Helpers\Result;
 
 class Day14 extends Day
 {
+    protected string $template;
+    protected array $rules;
+
     protected function loadData(): void
     {
         $data = $this->getArrayFromInputFile();
-        $this->template = array_shift($data);
+        $this->template = (string) array_shift($data);
         $this->rules = [];
         foreach ($data as $rule) {
             [$str, $rep] = explode(' -> ', $rule);
@@ -18,21 +21,14 @@ class Day14 extends Day
 
     protected function part1(): Result
     {
-        $answer = $this->getChainScore(10);
+        $answer = $this->scoreChain(10);
         return new Result(Result::PART1, $answer);
     }
 
     protected function part2(Result $part1): Result
     {
-        $answer = $this->getChainScore(40);
+        $answer = $this->scoreChain(40);
         return new Result(Result::PART2, $answer);
-    }
-
-    protected function getChainScore(int $iterations): int
-    {
-        $pairs = $this->growChain($iterations);
-        $values = $this->countChain($pairs);
-        return end($values) - $values[0];
     }
 
     protected function splitChain(string $chain): array
@@ -40,9 +36,6 @@ class Day14 extends Day
         $pairs = [];
         for ($i = 0; $i < strlen($chain) - 1; $i++) {
             $pair = substr($chain, $i, 2);
-            if (strlen($pair) == 1) {
-                throw new \Exception('Uneven template');
-            }
             $pairs = $this->addToKey($pairs, $pair);
         }
         return $pairs;
@@ -57,19 +50,24 @@ class Day14 extends Day
         return $arr;
     }
 
-    protected function growChain(int $iterations): array
+    protected function scoreChain(int $iterations): int
     {
+        $charCount = [];
         $pairs = $this->splitChain($this->template);
+        foreach (str_split($this->template) as $char) {
+            $charCount = $this->addToKey($charCount, $char);
+        }
         for ($i = 0; $i < $iterations; $i++) {
             $newPairs = $pairs;
             foreach ($this->rules as $str => $rep) {
                 if (!array_key_exists($str, $pairs)) {
                     continue;
                 }
-
                 $count = $pairs[$str];
+
+                $charCount = $this->addToKey($charCount, $rep, $count);
                 $newPairs = $this->addToKey($newPairs, $str, $count * -1);
-                
+
                 $chars = str_split($str);
                 $newPairs = $this->addToKey($newPairs, "{$chars[0]}{$rep}", $count);
                 $newPairs = $this->addToKey($newPairs, "{$rep}{$chars[1]}", $count);
@@ -77,22 +75,7 @@ class Day14 extends Day
             $pairs = $newPairs;
         }
 
-        return $pairs;
-    }
-
-    protected function countChain(array $pairs): array
-    {
-        $counts = [];
-        foreach ($pairs as $key => $value) {
-            $chars = str_split($key);
-            foreach ($chars as $char) {
-                $counts = $this->addToKey($counts, $char, $value);
-            }
-        }
-        foreach ($counts as $char => $value) {
-            $counts[$char] = ceil($value / 2);
-        }
-        sort($counts);
-        return $counts;
+        sort($charCount);
+        return end($charCount) - $charCount[0];
     }
 }
