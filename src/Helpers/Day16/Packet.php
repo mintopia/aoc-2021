@@ -17,7 +17,7 @@ class Packet
     public int $value = 0;
     public int $version = 0;
 
-    public function sumVersion()
+    public function sumVersion(): int
     {
         $sum = array_reduce($this->subPackets, function(int $carry, Packet $packet) {
             return $carry + $packet->sumVersion();
