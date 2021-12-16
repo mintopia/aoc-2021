@@ -29,7 +29,7 @@ abstract class Day extends Command
         $className = get_class($this);
         $this->dayNumber = (int) str_replace('Mintopia\Aoc2021\Day', '', $className);
         if ($name === null) {
-            $name = "aoc:day{$this->dayNumber}";
+            $name = "day{$this->dayNumber}";
         }
         parent::__construct($name);
     }

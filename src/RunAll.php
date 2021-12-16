@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RunAll extends Command
 {
-    protected static $defaultName = 'aoc:all';
+    protected static $defaultName = 'all';
 
     protected InputInterface $input;
     protected OutputInterface $output;
@@ -23,7 +23,7 @@ class RunAll extends Command
     {
         for ($i = 1; $i <= 24; $i++) {
             try {
-                $command = $this->getApplication()->find("aoc:day{$i}");
+                $command = $this->getApplication()->find("day{$i}");
                 $command->run($input, $output);
                 $output->writeln('');
             } catch (\Exception $e) {

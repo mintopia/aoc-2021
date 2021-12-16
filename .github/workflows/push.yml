@@ -10,4 +10,4 @@ jobs:
       - name: Build
         run: docker-compose run --rm composer install --ansi
       - name: Run
-        run: docker-compose run --rm aoc aoc:all --ansi --test
+        run: docker-compose run --rm aoc all --ansi --test
