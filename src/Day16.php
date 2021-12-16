@@ -10,8 +10,8 @@ class Day16 extends Day
 
     protected function loadData(): void
     {
-        $data = $this->getArrayFromInputFile();
-        $this->packet = $this->parse(str_split($data[0]));
+        $data = file_get_contents($this->getInputFilename());
+        $this->packet = $this->parse(str_split($data));
     }
 
     protected function part1(): Result
