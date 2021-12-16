@@ -22,20 +22,55 @@ This will install the relevant dependencies.
 Once you have installed dependencies, if you're running PHP natively, you can use `run.php` to see the available commands
 
 ```bash
-php run.php list
+php aoc list
 ```
 
 The days can then be run using:
 
 ```bash
-php run.php aoc:day1
+php aoc day1
 ```
 
 If you are using the docker container approach, you can run these commands in the following way:
 
 ```bash
 docker-compose run --rm aoc list
-docker-compose run --rm aoc aoc:day1
+docker-compose run --rm aoc day1
+```
+
+### Test Data
+
+To run the day with testdata, pass `--test` to the command. It will use test fixtures and answers from the `testdata` directory.
+
+### Benchmarking
+
+Benchmarking mode allows you to measure performance of the day's task. It will run the task repeatedly and show the average duration of part1, part2 and data loading.
+
+You can enable benchmarking mode by passing `--benchmark` to the command. In benchmarking mode, most days will not output any visualisation to increase performance.
+
+The number of iterations is configurable with `--iterations={number}`. The default is 100.
+
+```bash
+php aoc day16 --benchmark
+```
+```
+Advent of Code: Day 16
+
+Benchmarking: 100 iterations
+============================
+
+Performance
+===========
+
+ -------------- -----------
+  Section        Time (ms)
+ -------------- -----------
+  Data Loading   4.322
+  Part 1         0.529
+  Part 2         0.601
+ -------------- -----------
+  Total          5.452
+ -------------- -----------
 ```
 
 ## License
