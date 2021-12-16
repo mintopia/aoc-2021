@@ -57,14 +57,13 @@ class Day16 extends Day
                 if (substr($bin, $i, 1) == 0) {
                     $length = bindec(substr($bin, $i + 1, 15));
                     $subPackets = $this->getPackets(substr($bin, $i + 16, $length));
-                    $packet->subPackets = $subPackets->packets;
                     $i += 16 + $length;
                 } else {
                     $number = bindec(substr($bin, $i + 1, 11));
                     $subPackets = $this->getPackets(substr($bin, $i + 12), $number);
-                    $packet->subPackets = $subPackets->packets;
                     $i += 12 + $subPackets->bitsRead;
                 }
+                $packet->subPackets = $subPackets->packets;
             }
             $packets[] = (object) $packet;
             if ($packetLimit && count($packets) == $packetLimit) {
