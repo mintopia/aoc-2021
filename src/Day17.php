@@ -11,7 +11,7 @@ class Day17 extends Day
     protected function loadData(): void
     {
         $data = file_get_contents($this->getInputFilename());
-        preg_match('/^.*x\=(?<x1>-?\d+)\.{2}(?<x2>-?\d+)\, y\=(?<y1>\-?\d+)\.{2}(?<y2>\-?\d+)$/', $data, $matches);
+        preg_match('/^.*x\=(?<x1>-?\d+)\.{2}(?<x2>-?\d+)\, y\=(?<y1>-?\d+)\.{2}(?<y2>-?\d+)$/', $data, $matches);
         $this->x = range($matches['x1'], $matches['x2']);
         $this->y = range($matches['y1'], $matches['y2']);
     }
@@ -32,7 +32,6 @@ class Day17 extends Day
     protected function getHeights(): array
     {
         $heights = [];
-
         for ($vx = 0; $vx <= max($this->x); $vx++) {
             for ($vy = min($this->y); $vy <= abs(min($this->y)); $vy++) {
                 $result = $this->fire($vx, $vy);
