@@ -4,10 +4,19 @@ namespace Mintopia\Aoc2021;
 use Mintopia\Aoc2021\Helpers\Day19\Scanner;
 use Mintopia\Aoc2021\Helpers\Result;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class Day19 extends Day
 {
+
+
+    protected function configure(): void
+    {
+        parent::configure();
+        // Our point matching threshold, default found for our input based on trial/error.
+        $this->addOption('points', 'p',  InputOption::VALUE_OPTIONAL, 'Minimum number of matching points', 3);
+    }
 
     protected function loadData(): void
     {
@@ -44,11 +53,13 @@ class Day19 extends Day
         $unknownScanners = $this->data;
         unset($unknownScanners[0]);
 
+        $threshold = $this->input->getOption('points');
+
         while ($unknownScanners) {
             foreach ($unknownScanners as $si => $scanner) {
                 foreach ($knownScanners as $ki => $known) {
                     foreach ($scanner->rotations as $i => $rotation) {
-                        $offset = $known->getOffset($rotation, 12);
+                        $offset = $known->getOffset($rotation, $threshold);
                         if ($offset) {
                             $scanner->rotation = $i;
                             $scanner->offset = $offset;
