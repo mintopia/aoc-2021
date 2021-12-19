@@ -3,9 +3,7 @@ namespace Mintopia\Aoc2021;
 
 use Mintopia\Aoc2021\Helpers\Day19\Scanner;
 use Mintopia\Aoc2021\Helpers\Result;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class Day19 extends Day
 {
