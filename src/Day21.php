@@ -43,7 +43,8 @@ class Day21 extends Day
         return new Result(Result::PART2, $high);
     }
 
-    public function quantum(int $p1Space, int $p2Space, int $p1Score, int $p2Score, array &$outcomes = []) {
+    public function quantum(int $p1Space, int $p2Space, int $p1Score, int $p2Score, array &$outcomes = []): array
+    {
         // Win conditions
         if ($p1Score >= 21) {
             return [1, 0];
@@ -57,20 +58,26 @@ class Day21 extends Day
             return $outcomes[$key];
         }
 
-        // Track our results
-        $result = [0, 0];
-        foreach (range(1, 3) as $d1) {
-            foreach (range(1, 3) as $d2) {
-                foreach (range(1, 3) as $d3) {
-                    $p1SpaceInner = $p1Space + $d1 + $d2 + $d3;
-                    $p1SpaceInner %= 10;
-                    $p1ScoreInner = $p1Score + $p1SpaceInner + 1;
+        $diceFrequencies = [
+            3 => 1,
+            4 => 3,
+            5 => 6,
+            6 => 7,
+            7 => 6,
+            8 => 3,
+            9 => 1,
+        ];
 
-                    $p2Result = $this->quantum($p2Space, $p1SpaceInner, $p2Score, $p1ScoreInner, $outcomes);
-                    $result[0] += $p2Result[1];
-                    $result[1] += $p2Result[0];
-                }
-            }
+        $result = [0, 0];
+
+        foreach (range(3, 9) as $diceRoll) {
+            $space = $p1Space + $diceRoll;
+            $space %= 10;
+            $score = $p1Score + $space + 1;
+
+            $p2Result = $this->quantum($p2Space, $space, $p2Score, $score, $outcomes);
+            $result[0] += $p2Result[1] * $diceFrequencies[$diceRoll];
+            $result[1] += $p2Result[0] * $diceFrequencies[$diceRoll];
         }
 
         // Store outcome for these inputs
